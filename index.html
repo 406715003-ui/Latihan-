@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jenis Ayat – เกมทายประเภทประโยคภาษามลายู</title>
+<style>
+:root{--bg:#efe9ff;--card:#fff;--ink:#2d2150;--mute:#6f6592;--line:#d8c9f5;--pri:#7a4fc4;--pri2:#3f8fdf;--soft:#f5f0ff;--ok:#1d7d49;--okbg:#d9f6e5;--no:#b73333;--nobg:#ffe1e1;--hl:#ffe08a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161230;--card:#221c45;--ink:#efeaff;--mute:#b2a8d6;--line:#4a3f82;--soft:#2c2556;--ok:#7be0a6;--okbg:#18402c;--no:#ff9b9b;--nobg:#4a2020;--hl:#7a5c00}}
+:root[data-theme="dark"]{--bg:#161230;--card:#221c45;--ink:#efeaff;--mute:#b2a8d6;--line:#4a3f82;--soft:#2c2556;--ok:#7be0a6;--okbg:#18402c;--no:#ff9b9b;--nobg:#4a2020;--hl:#7a5c00}
+html{color-scheme:light dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+:root[data-theme="light"]{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Thai","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;justify-content:center;padding:16px}
+.app{width:100%;max-width:560px;display:flex;flex-direction:column;gap:14px}
+.top{display:flex;align-items:center;gap:10px}
+.title{font-size:20px;font-weight:800;flex:1}
+.pill{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:700;font-size:14px;white-space:nowrap}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .3s}
+.card{background:var(--card);border-radius:22px;padding:22px 18px;box-shadow:0 6px 22px #4a2f9a22;text-align:center}
+.q-label{color:var(--mute);font-weight:700;font-size:14px;margin:0 0 10px}
+.sentence{font-size:26px;line-height:1.5;font-weight:700;margin:6px 0 4px;word-break:break-word}
+.sentence mark{background:var(--hl);color:inherit;border-radius:6px;padding:0 4px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:18px 8px;font:inherit;font-size:17px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center;transition:transform .12s,background .15s}
+.ans span{font-size:30px}
+.ans small{font-weight:600;color:var(--mute);font-size:12px}
+.ans:hover:not(:disabled){background:var(--soft)}
+.ans:active:not(:disabled){transform:scale(.96)}
+.ans:focus-visible,.btn:focus-visible{outline:3px solid var(--pri2);outline-offset:2px}
+.ans.right{background:var(--okbg);border-color:var(--ok)}
+.ans.wrong{background:var(--nobg);border-color:var(--no);animation:shake .3s}
+.ans:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{border-radius:16px;padding:14px;text-align:left;line-height:1.55;display:none}
+.fb.ok{display:block;background:var(--okbg);color:var(--ok)}
+.fb.no{display:block;background:var(--nobg);color:var(--no)}
+.fb b{display:block;font-size:17px;margin-bottom:2px}
+.btn{border:0;border-radius:16px;padding:15px;font:inherit;font-size:17px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pri),var(--pri2));cursor:pointer;width:100%}
+.btn.ghost{background:var(--card);color:var(--pri);border:2px solid var(--line)}
+.btn[hidden]{display:none}
+.hint{color:var(--mute);font-size:12px;text-align:center;margin:0}
+.big{font-size:56px;font-weight:800;margin:8px 0}
+.review{text-align:left;margin:12px 0;padding:0;list-style:none;display:grid;gap:8px}
+.review li{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.5}
+.review b{display:block}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="top">
+    <div class="title">📚 Jenis Ayat</div>
+    <div class="pill" id="streak">🔥 0</div>
+    <div class="pill" id="score">0 คะแนน</div>
+  </div>
+
+  <section id="start" class="card">
+    <div class="big">✏️⭐</div>
+    <h1 style="margin:0 0 8px;font-size:24px">เกมทายประเภทประโยคภาษามลายู</h1>
+    <p style="color:var(--mute);line-height:1.6;margin:0 0 16px">📝 Ayat Penyata คือประโยคบอกเล่า<br>❓ Ayat Tanya คือประโยคคำถาม<br>ตอบถูกต่อเนื่องเพื่อสะสมคอมโบ 🔥</p>
+    <button class="btn" id="startBtn">เริ่มเล่น</button>
+  </section>
+
+  <section id="game" hidden>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="card" style="margin-top:14px">
+      <p class="q-label" id="qn"></p>
+      <div class="sentence" id="sentence"></div>
+    </div>
+    <div class="answers" style="margin:14px 0">
+      <button class="ans" data-v="penyata"><span>📝</span>Ayat Penyata<small>กด 1</small></button>
+      <button class="ans" data-v="tanya"><span>❓</span>Ayat Tanya<small>กด 2</small></button>
+    </div>
+    <div class="fb" id="fb" role="status" aria-live="polite"></div>
+    <button class="btn" id="next" hidden style="margin-top:14px">ข้อถัดไป</button>
+  </section>
+
+  <section id="end" class="card" hidden>
+    <div style="font-size:64px">🏆</div>
+    <h1 style="margin:4px 0;font-size:24px">จบเกมแล้ว</h1>
+    <div class="big" id="final"></div>
+    <p id="msg" style="font-weight:700;margin:0 0 8px"></p>
+    <ul class="review" id="review"></ul>
+    <button class="btn" id="again">เล่นอีกครั้ง</button>
+  </section>
+
+  <p class="hint">Selamat belajar! ขอให้สนุกกับการเรียนรู้ 🌸</p>
+</main>
+
+<script>
+const BANK=[
+{s:"Saya suka membaca buku cerita.",a:"penyata",w:"",c:"เป็นการบอกเล่าว่าผู้พูดชอบอะไร ไม่มีคำถามและลงท้ายด้วยเครื่องหมายมหัพภาค (.)"},
+{s:"Siapakah nama guru Bahasa Melayu kamu?",a:"tanya",w:"Siapakah",c:"มีคำถาม Siapakah (ใคร) และลงท้ายด้วยเครื่องหมายปรัศนี (?)"},
+{s:"Rumah Ali sangat besar dan bersih.",a:"penyata",w:"",c:"บอกลักษณะของบ้าน ไม่ได้ถามอะไร"},
+{s:"Adakah kamu akan pergi ke sekolah esok?",a:"tanya",w:"Adakah",c:"Adakah ใช้ถามคำตอบแบบใช่หรือไม่ใช่"},
+{s:"Dia tidak datang ke sekolah kerana sakit.",a:"penyata",w:"",c:"เล่าเหตุผลที่ไม่มาโรงเรียน แม้มีคำว่า tidak ก็ยังเป็นประโยคบอกเล่า"},
+{s:"Mereka bermain bola di padang.",a:"penyata",w:"",c:"บอกว่าพวกเขาทำอะไรที่ไหน"},
+{s:"Bilakah kamu akan pulang?",a:"tanya",w:"Bilakah",c:"Bilakah แปลว่าเมื่อไร ใช้ถามเวลา"},
+{s:"Ibu memasak nasi di dapur.",a:"penyata",w:"",c:"บอกเล่าเหตุการณ์ ไม่มีคำถาม"},
+{s:"Mengapakah Amir tidak hadir ke sekolah?",a:"tanya",w:"Mengapakah",c:"Mengapakah แปลว่าทำไม ใช้ถามสาเหตุ"},
+{s:"Kami akan pergi ke perpustakaan pada hari Isnin.",a:"penyata",w:"",c:"บอกแผนที่จะทำ ไม่ได้ถาม"},
+{s:"Di manakah letaknya bilik guru?",a:"tanya",w:"Di manakah",c:"Di manakah แปลว่าที่ไหน ใช้ถามสถานที่"},
+{s:"Adik membaca buku di perpustakaan.",a:"penyata",w:"",c:"บอกเล่าว่าน้องทำอะไร"}
+];
+const N=10,$=id=>document.getElementById(id);
+let qs,i,score,streak,locked,wrongs;
+const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+const label=v=>v==="penyata"?"Ayat Penyata":"Ayat Tanya";
+const esc=t=>t.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+function show(id){["start","game","end"].forEach(x=>$(x).hidden=x!==id)}
+function start(){qs=shuffle(BANK).slice(0,N);i=0;score=0;streak=0;wrongs=[];hud();show("game");load()}
+function hud(){$("score").textContent=score+" คะแนน";$("streak").textContent="🔥 "+streak}
+function load(){
+  const q=qs[i];locked=false;
+  $("qn").textContent="ข้อ "+(i+1)+" จาก "+N;
+  $("bar").style.width=(i/N*100)+"%";
+  $("sentence").textContent=q.s;
+  document.querySelectorAll(".ans").forEach(b=>{b.disabled=false;b.className="ans"});
+  $("fb").className="fb";$("fb").innerHTML="";$("next").hidden=true;
+}
+function answer(v){
+  if(locked)return;locked=true;
+  const q=qs[i],ok=v===q.a;
+  document.querySelectorAll(".ans").forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.v===q.a)b.classList.add("right");
+    else if(b.dataset.v===v)b.classList.add("wrong");
+  });
+  if(q.w){const e=esc(q.s),w=esc(q.w);$("sentence").innerHTML=e.replace(w,"<mark>"+w+"</mark>")}
+  if(ok){score+=10+Math.min(streak,5)*2;streak++}else{streak=0;wrongs.push(q)}
+  hud();
+  $("fb").className="fb "+(ok?"ok":"no");
+  $("fb").innerHTML="<b>"+(ok?"ถูกต้อง! 🎉":"ยังไม่ถูก คำตอบคือ "+label(q.a))+"</b>"+esc(q.c);
+  $("next").textContent=i===N-1?"ดูผลลัพธ์ 🏆":"ข้อถัดไป";
+  $("next").hidden=false;$("next").focus();
+}
+function next(){if(i<N-1){i++;load()}else finish()}
+function finish(){
+  $("bar").style.width="100%";
+  const right=N-wrongs.length;
+  $("final").textContent=right+" / "+N;
+  $("msg").textContent=right===N?"🌟 ยอดเยี่ยม! ตอบถูกทุกข้อ":right>=8?"🎉 เก่งมาก! เข้าใจบทเรียนดี":right>=5?"💜 ทำได้ดี ฝึกอีกนิดนะ":"💪 สู้ ๆ ลองทบทวนแล้วเล่นใหม่";
+  $("review").innerHTML=wrongs.length?"<li><b>ข้อที่ควรทบทวน</b></li>"+wrongs.map(q=>"<li><b>"+esc(q.s)+"</b>"+label(q.a)+": "+esc(q.c)+"</li>").join(""):"";
+  show("end");
+}
+document.querySelectorAll(".ans").forEach(b=>b.onclick=()=>answer(b.dataset.v));
+$("next").onclick=next;$("startBtn").onclick=start;$("again").onclick=start;
+document.addEventListener("keydown",e=>{
+  if($("game").hidden)return;
+  if(e.key==="1")answer("penyata");
+  else if(e.key==="2")answer("tanya");
+  else if(e.key==="Enter"&&locked&&e.target!==$("next"))next();
+});
+</script>
+</body>
+</html>
